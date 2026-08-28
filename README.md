@@ -1,31 +1,36 @@
-# agentcreds.ardabot.ai
+# agentcreds.vercel.app
 
 Landing page for [agent-creds](https://github.com/ardabotai/agent-creds), and —
 more importantly — the **relying party domain** for its passkey support.
+
+Currently served at `agentcreds.vercel.app`. `agentcreds.ardabot.ai` is already
+attached to this Vercel project and becomes live the moment the DNS record
+below exists; switching then means updating the relying party constant and the
+app entitlement to match.
 
 ## Why this site has to exist
 
 agent-creds can derive its vault key from a WebAuthn passkey (Phase 3). Apple
 requires the relying party to prove it authorizes the app, by serving:
 
-    https://agentcreds.ardabot.ai/.well-known/apple-app-site-association
+    https://agentcreds.vercel.app/.well-known/apple-app-site-association
 
 ```json
 { "webcredentials": { "apps": ["3CQT7X643L.ai.ardabot.agentcreds"] } }
 ```
 
 `<TeamID>.<BundleID>`. The macOS app declares the matching
-`webcredentials:agentcreds.ardabot.ai` entitlement. Both sides must agree or
+`webcredentials:agentcreds.vercel.app` entitlement. Both sides must agree or
 passkey registration fails with a domain association error.
 
 Served from `app/api/aasa/route.ts` via a rewrite rather than `public/`, because
 Apple requires `application/json` and follows **no redirects** — a static
 extensionless file gets the wrong content type, and any redirect fails silently.
 
-## DNS
+## DNS (optional — for the custom domain)
 
-`agentcreds.ardabot.ai` must resolve to Vercel. In Cloudflare (which hosts the
-ardabot.ai zone):
+Not required today; `agentcreds.vercel.app` is authoritative. To move to
+`agentcreds.ardabot.ai`, add this in Cloudflare (which hosts the zone):
 
 | Type | Name | Content | Proxy |
 |---|---|---|---|
