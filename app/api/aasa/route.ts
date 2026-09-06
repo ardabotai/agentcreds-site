@@ -8,6 +8,12 @@
 //
 // The identifier is <TeamID>.<BundleID>.
 const ASSOCIATION = {
+  applinks: {
+    details: [{
+      appIDs: ['3CQT7X643L.ai.ardabot.agentcreds', '3CQT7X643L.ai.ardabot.agentcreds.companion'],
+      components: [{ '/': '/approve/*', comment: 'Review a request in the app. Opening never approves.' }],
+    }],
+  },
   webcredentials: {
     apps: ['3CQT7X643L.ai.ardabot.agentcreds'],
   },
